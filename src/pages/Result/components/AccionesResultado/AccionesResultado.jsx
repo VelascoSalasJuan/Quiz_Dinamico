@@ -1,6 +1,6 @@
-import './ResultActions.css'
+import './AccionesResultado.css'
 
-function ResultActions() {
+function AccionesResultado() {
   return (
     <div className="result-actions">
       <button type="button">Reiniciar</button>
@@ -8,4 +8,4 @@ function ResultActions() {
   )
 }
 
-export default ResultActions
+export default AccionesResultado

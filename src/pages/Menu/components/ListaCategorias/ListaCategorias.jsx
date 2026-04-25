@@ -1,11 +1,11 @@
-import CategoryButton from './CategoryButton.jsx'
-import { categories } from '../../../data/categories.js'
+import BotonCategoria from '../BotonCategoria/BotonCategoria.jsx'
+import { categories } from '../../../../data/categories.js'
 
-function CategoryList() {
+function ListaCategorias() {
   return (
     <section className="category-grid">
       {categories.map((category) => (
-        <CategoryButton
+        <BotonCategoria
           key={category.id}
           id={category.id}
           name={category.name}
@@ -17,4 +17,4 @@ function CategoryList() {
   )
 }
 
-export default CategoryList
+export default ListaCategorias

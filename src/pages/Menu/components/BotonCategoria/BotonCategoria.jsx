@@ -1,7 +1,7 @@
-import './CategoryButton.css'
+import './BotonCategoria.css'
 import { useNavigate } from 'react-router-dom'
 
-function CategoryButton({ id, name, icon, color }) {
+function BotonCategoria({ id, name, icon, color }) {
   const navigate = useNavigate()
 
   const handleClick = () => {
@@ -21,4 +21,4 @@ function CategoryButton({ id, name, icon, color }) {
   )
 }
 
-export default CategoryButton
+export default BotonCategoria

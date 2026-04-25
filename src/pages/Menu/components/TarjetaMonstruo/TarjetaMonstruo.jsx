@@ -1,7 +1,7 @@
-import './MonsterCard.css'
+import './TarjetaMonstruo.css'
 import { useNavigate } from 'react-router-dom'
 
-function MonsterCard({ id, name, icon, color, hp, attack }) {
+function TarjetaMonstruo({ id, name, icon, color, hp, attack }) {
   const navigate = useNavigate()
 
   const handleClick = () => {
@@ -25,4 +25,4 @@ function MonsterCard({ id, name, icon, color, hp, attack }) {
   )
 }
 
-export default MonsterCard
+export default TarjetaMonstruo

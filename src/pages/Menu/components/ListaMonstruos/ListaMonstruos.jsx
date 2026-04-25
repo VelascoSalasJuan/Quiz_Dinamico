@@ -1,13 +1,13 @@
-import MonsterCard from './MonsterCard.jsx'
-import { monsters } from '../../../data/monsters.js'
+import TarjetaMonstruo from '../TarjetaMonstruo/TarjetaMonstruo.jsx'
+import { monsters } from '../../../../data/monsters.js'
 
-function MonsterList() {
+function ListaMonstruos() {
   const selectableMonsters = monsters.slice(0, 2)
 
   return (
     <section className="monster-grid">
       {selectableMonsters.map((monster) => (
-        <MonsterCard
+        <TarjetaMonstruo
           key={monster.id}
           id={monster.id}
           name={monster.name}
@@ -21,4 +21,4 @@ function MonsterList() {
   )
 }
 
-export default MonsterList
+export default ListaMonstruos

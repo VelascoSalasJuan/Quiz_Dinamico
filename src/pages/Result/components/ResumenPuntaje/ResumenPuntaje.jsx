@@ -1,6 +1,6 @@
-import './ScoreSummary.css'
+import './ResumenPuntaje.css'
 
-function ScoreSummary({ score, total }) {
+function ResumenPuntaje({ score, total }) {
   return (
     <section className="score-summary">
       <p>Score: {score} / {total}</p>
@@ -8,4 +8,4 @@ function ScoreSummary({ score, total }) {
   )
 }
 
-export default ScoreSummary
+export default ResumenPuntaje
