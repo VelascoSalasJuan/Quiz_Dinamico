@@ -1,35 +1,92 @@
 .quiz-page {
-  min-height: 100vh;
-  padding: 2rem;
+  height: 100vh;
+  padding: 1.25rem 2rem 1rem;
   background: linear-gradient(160deg, #f3f6ff 0%, #ecf9ff 100%);
   color: #1f2937;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
-.quiz-page h1 {
+.quiz-header h1 {
   margin-bottom: 0.5rem;
 }
 
-.question-list {
-  margin-top: 1.5rem;
-  display: grid;
-  gap: 1rem;
+.quiz-header p {
+  margin: 0;
+  color: #475569;
 }
 
-.question-item {
+.quiz-layout {
+  flex: 1;
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.question-panel,
+.options-panel {
   background: #ffffff;
   border-radius: 0.75rem;
   padding: 1rem;
   box-shadow: 0 6px 18px rgba(15, 23, 42, 0.08);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
-.question-item h2 {
-  margin: 0 0 0.5rem;
+.question-panel {
+  flex: 0.65;
+}
+
+.options-panel {
+  flex: 0.65;
+}
+
+.options-panel h2 {
+  margin: 0 0 0.4rem;
   font-size: 1.1rem;
+}
+
+.question-panel p {
+  margin: 0;
+  font-size: 1.6rem;
+  line-height: 1.4;
+  text-align: center;
+}
+
+.options-grid {
+  display: grid;
+  flex: 1;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-content: start;
+  gap: 0.75rem;
+}
+
+.option-button {
+  width: 100%;
+  min-height: 104px;
+  border: 2px solid #c7d2fe;
+  border-radius: 0.6rem;
+  background: #f8faff;
+  color: #1e293b;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.option-button:hover,
+.option-button:focus {
+  background: #e8edff;
+  transform: translateY(-1px);
 }
 
 .back-link {
   display: inline-block;
-  margin-top: 1.5rem;
+  margin-top: 0.75rem;
   text-decoration: none;
   font-weight: 600;
   color: #4338ca;
@@ -37,4 +94,18 @@
 
 .back-link:hover {
   text-decoration: underline;
+}
+
+@media (max-width: 640px) {
+  .quiz-page {
+    padding: 1rem;
+  }
+
+  .question-panel p {
+    font-size: 1.1rem;
+  }
+
+  .options-grid {
+    grid-template-columns: 1fr;
+  }
 }

@@ -7,6 +7,7 @@ function QuizPage() {
   const { categoryId } = useParams()
   const selectedCategory = categories.find((category) => category.id === categoryId)
   const categoryQuestions = questions.filter((question) => question.category === categoryId)
+  const currentQuestion = categoryQuestions[0]
 
   if (!selectedCategory) {
     return (
@@ -17,18 +18,38 @@ function QuizPage() {
     )
   }
 
+  if (!currentQuestion) {
+    return (
+      <main className="quiz-page">
+        <h1>{selectedCategory.icon} Quiz de {selectedCategory.name}</h1>
+        <p>No hay preguntas disponibles en esta categoría.</p>
+        <Link to="/" className="back-link">Volver al menú</Link>
+      </main>
+    )
+  }
+
   return (
     <main className="quiz-page">
-      <h1>{selectedCategory.icon} Quiz de {selectedCategory.name}</h1>
-      <p>Total de preguntas: {categoryQuestions.length}</p>
+      <header className="quiz-header">
+        <h1>{selectedCategory.icon} Quiz de {selectedCategory.name}</h1>
+        <p>Pregunta 1 de {categoryQuestions.length}</p>
+      </header>
 
-      <section className="question-list">
-        {categoryQuestions.map((question, index) => (
-          <article key={question.id} className="question-item">
-            <h2>Pregunta {index + 1}</h2>
-            <p>{question.prompt}</p>
-          </article>
-        ))}
+      <section className="quiz-layout">
+        <article className="question-panel">
+          <p>{currentQuestion.prompt}</p>
+        </article>
+
+        <section className="options-panel">
+          <h2>Opciones</h2>
+          <div className="options-grid">
+            {currentQuestion.options.map((option) => (
+              <button key={option} type="button" className="option-button">
+                {option}
+              </button>
+            ))}
+          </div>
+        </section>
       </section>
 
       <Link to="/" className="back-link">Volver al menú</Link>
