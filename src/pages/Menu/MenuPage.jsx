@@ -1,11 +1,11 @@
 import './MenuPage.css'
-import CategoryList from './components/CategoryList.jsx'
+import MonsterList from './components/MonsterList.jsx'
 
 function MenuPage() {
   return (
     <main className="menu-page">
-      <h1>Selecciona una temática</h1>
-      <CategoryList />
+      <h1>Elige al monstruo que quieres enfrentar</h1>
+      <MonsterList />
     </main>
   )
 }

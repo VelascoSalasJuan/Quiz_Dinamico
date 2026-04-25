@@ -9,15 +9,22 @@
 
 .menu-page h1 {
   color: #ffffff;
-  font-size: 2.5rem;
+  font-size: 2.2rem;
   margin-bottom: 2rem;
+  text-align: center;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-.category-grid {
+.monster-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  grid-template-columns: repeat(2, minmax(260px, 1fr));
   gap: 1rem;
-  max-width: 800px;
+  max-width: 700px;
   width: 100%;
+}
+
+@media (max-width: 700px) {
+  .monster-grid {
+    grid-template-columns: 1fr;
+  }
 }
