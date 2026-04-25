@@ -1,10 +1,15 @@
 import './CategoryItem.css'
 
-function CategoryItem({ name }) {
+function CategoryItem({ name, icon, color }) {
   return (
-    <div className="category-item">
-      {name}
-    </div>
+    <button 
+      type="button" 
+      className="category-item" 
+      style={{ borderColor: color, color: color }}
+    >
+      <span className="category-icon">{icon}</span>
+      <span className="category-name">{name}</span>
+    </button>
   )
 }
 

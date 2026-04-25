@@ -1,3 +1,39 @@
 .category-item {
-  margin: 0;
+  margin: 0.5rem;
+  padding: 1rem;
+  border: 3px solid;
+  border-radius: 1rem;
+  background: #ffffff;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 120px;
+  width: 100%;
+  max-width: 180px;
+}
+
+.category-item:hover,
+.category-item:focus {
+  background: rgba(240, 248, 255, 0.8);
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+.category-item:focus {
+  outline: 3px solid #0078d4;
+  outline-offset: 2px;
+}
+
+.category-icon {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.category-name {
+  text-align: center;
 }
