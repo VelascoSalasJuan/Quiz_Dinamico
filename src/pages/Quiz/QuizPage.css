@@ -1,3 +1,40 @@
 .quiz-page {
-  padding: 0;
+  min-height: 100vh;
+  padding: 2rem;
+  background: linear-gradient(160deg, #f3f6ff 0%, #ecf9ff 100%);
+  color: #1f2937;
+}
+
+.quiz-page h1 {
+  margin-bottom: 0.5rem;
+}
+
+.question-list {
+  margin-top: 1.5rem;
+  display: grid;
+  gap: 1rem;
+}
+
+.question-item {
+  background: #ffffff;
+  border-radius: 0.75rem;
+  padding: 1rem;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.08);
+}
+
+.question-item h2 {
+  margin: 0 0 0.5rem;
+  font-size: 1.1rem;
+}
+
+.back-link {
+  display: inline-block;
+  margin-top: 1.5rem;
+  text-decoration: none;
+  font-weight: 600;
+  color: #4338ca;
+}
+
+.back-link:hover {
+  text-decoration: underline;
 }
