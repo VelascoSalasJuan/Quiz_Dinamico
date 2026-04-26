@@ -1,1 +1,23 @@
-/* Estilos específicos del QuestionPanel si se necesitan en el futuro */
+.question-panel {
+  background: #ffffff;
+  border-radius: 0.75rem;
+  padding: 1rem;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.08);
+  min-height: 190px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.question-panel p {
+  margin: 0;
+  font-size: 1.5rem;
+  line-height: 1.35;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .question-panel p {
+    font-size: 1.2rem;
+  }
+}

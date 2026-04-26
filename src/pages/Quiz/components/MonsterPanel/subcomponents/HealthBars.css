@@ -1,1 +1,41 @@
-/* Estilos específicos del HealthBars si se necesitan en el futuro */
+.status-box {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.status-box p {
+  margin: 0.3rem 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #374151;
+}
+
+.hp-bar {
+  width: 100%;
+  height: 10px;
+  border-radius: 999px;
+  background: #e2e8f0;
+  overflow: hidden;
+  margin: 0.5rem 0;
+  position: relative;
+}
+
+.hp-fill {
+  display: block;
+  height: 100%;
+  transition: width 0.3s ease;
+  position: relative;
+}
+
+.player-hp {
+  width: 100%;
+  background: #3b82f6;
+}
+
+.enemy-hp {
+  width: 100%;
+  background: #ef4444;
+}

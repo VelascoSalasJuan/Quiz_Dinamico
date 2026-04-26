@@ -1,4 +1,4 @@
-import '../../../QuizPage.css'
+import './HealthBars.css'
 
 const HealthBars = ({ 
   playerHp, 

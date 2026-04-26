@@ -1,4 +1,4 @@
-import '../../QuizPage.css'
+import './MonsterPanel.css'
 import NextActionIndicator from './subcomponents/NextActionIndicator.jsx'
 import HealthBars from './subcomponents/HealthBars.jsx'
 import ActionButtons from './subcomponents/ActionButtons.jsx'

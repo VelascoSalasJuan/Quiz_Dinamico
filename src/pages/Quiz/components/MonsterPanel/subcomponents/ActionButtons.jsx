@@ -1,4 +1,4 @@
-import '../../../QuizPage.css'
+import './ActionButtons.css'
 
 const ActionButtons = ({ 
   selectedAction, 

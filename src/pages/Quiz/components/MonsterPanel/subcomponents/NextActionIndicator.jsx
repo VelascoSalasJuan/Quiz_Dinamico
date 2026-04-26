@@ -1,11 +1,12 @@
-import '../../../QuizPage.css'
+import './NextActionIndicator.css'
 
-const NextActionIndicator = ({ nextAction, getActionIcon, getActionText }) => {
+const NextActionIndicator = ({ nextAction, getActionIcon }) => {
   return (
     <div className="next-enemy-action">
-      <div className="action-label">El monstruo preparará:</div>
-      <div className="action-icon">{getActionIcon(nextAction)}</div>
-      <div className="action-text">{getActionText(nextAction)}</div>
+      <div className="action-circle">
+        {getActionIcon(nextAction)}
+      </div>
+      <div className="action-label">siguiente</div>
     </div>
   )
 }

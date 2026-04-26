@@ -1,1 +1,5 @@
-/* Estilos específicos del MonsterPanel si se necesitan en el futuro */
+.battle-feedback {
+  margin-top: 0.65rem;
+  color: #1f2937;
+  font-weight: 600;
+}

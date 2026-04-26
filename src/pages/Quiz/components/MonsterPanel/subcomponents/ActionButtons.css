@@ -1,1 +1,46 @@
-/* Estilos específicos del ActionButtons si se necesitan en el futuro */
+.action-buttons {
+  margin-top: auto;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.action-buttons button {
+  min-height: 42px;
+  border: 2px solid #4338ca;
+  border-radius: 0.6rem;
+  background: #ffffff;
+  color: #4338ca;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.action-buttons button:hover:not(:disabled) {
+  background: #4338ca;
+  color: #ffffff;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(67, 56, 202, 0.3);
+}
+
+.action-buttons button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.action-buttons button.action-active {
+  background: #c7d2fe;
+  border-color: #3730a3;
+}
+
+.action-buttons button:last-child {
+  background: #ef4444;
+  border-color: #ef4444;
+  color: #ffffff;
+}
+
+.action-buttons button:last-child:hover:not(:disabled) {
+  background: #dc2626;
+  border-color: #dc2626;
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+}

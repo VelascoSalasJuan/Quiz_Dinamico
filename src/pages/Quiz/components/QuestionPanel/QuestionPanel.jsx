@@ -1,4 +1,4 @@
-import '../../QuizPage.css'
+import './QuestionPanel.css'
 
 const QuestionPanel = ({ currentQuestion, selectedAction }) => {
   return (

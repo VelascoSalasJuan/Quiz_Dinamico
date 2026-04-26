@@ -50,91 +50,7 @@
   gap: 0.85rem;
 }
 
-.question-panel,
-.options-panel {
-  background: #ffffff;
-  border-radius: 0.75rem;
-  padding: 1rem;
-  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.08);
-}
 
-.question-panel {
-  min-height: 190px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.question-panel p {
-  margin: 0;
-  font-size: 1.5rem;
-  line-height: 1.35;
-  text-align: center;
-}
-
-.options-panel {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-.options-panel h2 {
-  margin: 0 0 0.45rem;
-  font-size: 1.1rem;
-}
-
-.options-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.7rem;
-}
-
-.option-button {
-  width: 100%;
-  min-height: 78px;
-  border: 2px solid #c7d2fe;
-  border-radius: 0.6rem;
-  background: #f8faff;
-  color: #1e293b;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background-color 0.2s ease, transform 0.2s ease;
-}
-
-.option-button:hover,
-.option-button:focus {
-  background: #e8edff;
-  transform: translateY(-1px);
-}
-
-.option-button:disabled {
-  cursor: not-allowed;
-  opacity: 0.65;
-  transform: none;
-}
-
-.option-correct {
-  background: #dcfce7;
-  border-color: #22c55e;
-  color: #14532d;
-}
-
-.option-incorrect {
-  background: #fee2e2;
-  border-color: #ef4444;
-  color: #7f1d1d;
-}
-
-.option-muted {
-  opacity: 0.8;
-}
-
-.answer-feedback {
-  margin: 0.45rem 0 0;
-  font-size: 0.95rem;
-  color: #14532d;
-}
 
 .monster-container {
   position: relative;
@@ -147,109 +63,12 @@
   font-size: 4rem;
 }
 
-.next-enemy-action {
-  position: absolute;
-  right: -80px;
-  top: 50%;
-  transform: translateY(-50%);
-  background: #ffffff;
-  border: 3px solid #f59e0b;
-  border-radius: 12px;
-  width: 140px;
-  padding: 12px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4);
-  animation: pulse 2s infinite;
-  z-index: 10;
-}
-
-.action-label {
-  font-size: 0.7rem;
-  font-weight: 700;
-  color: #92400e;
-  margin-bottom: 4px;
-  text-align: center;
-  line-height: 1.2;
-}
-
-.action-icon {
-  font-size: 1.8rem;
-  margin-bottom: 4px;
-}
-
-.action-text {
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: #451a03;
-  text-align: center;
-}
 
 .right-panel h2 {
   margin: 0;
   text-align: center;
 }
 
-.status-box p {
-  margin: 0.3rem 0;
-  font-size: 0.95rem;
-}
-
-.battle-feedback {
-  margin-top: 0.65rem;
-  color: #1f2937;
-  font-weight: 600;
-}
-
-.hp-bar {
-  height: 10px;
-  border-radius: 999px;
-  background: #e2e8f0;
-  overflow: hidden;
-}
-
-.hp-fill {
-  display: block;
-  height: 100%;
-}
-
-.player-hp {
-  width: 100%;
-  background: #3b82f6;
-}
-
-.enemy-hp {
-  width: 100%;
-  background: #ef4444;
-}
-
-.action-buttons {
-  margin-top: auto;
-  display: grid;
-  gap: 0.5rem;
-}
-
-.action-buttons button {
-  min-height: 42px;
-  border: 2px solid #4338ca;
-  border-radius: 0.6rem;
-  background: #eef2ff;
-  color: #312e81;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-.action-buttons button:disabled {
-  opacity: 0.55;
-  cursor: not-allowed;
-}
-
-.action-buttons .action-active {
-  background: #c7d2fe;
-  border-color: #3730a3;
-}
 
 .back-link {
   display: inline-block;
@@ -295,11 +114,4 @@
     padding: 0.85rem;
   }
 
-  .question-panel p {
-    font-size: 1.2rem;
   }
-
-  .options-grid {
-    grid-template-columns: 1fr;
-  }
-}

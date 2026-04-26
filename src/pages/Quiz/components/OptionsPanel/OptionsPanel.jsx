@@ -1,4 +1,4 @@
-import '../../QuizPage.css'
+import './OptionsPanel.css'
 
 const OptionsPanel = ({ 
   currentQuestion, 
