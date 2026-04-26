@@ -19,7 +19,7 @@ const ActionButtons = ({
         disabled={!isPlayerTurn || isGameFinished}
         className={selectedAction === 'attack' ? 'action-active' : ''}
       >
-        Atacar
+        ⚔️
       </button>
       
       {/* Ataque fuerte - con cooldown */}
@@ -29,7 +29,7 @@ const ActionButtons = ({
         disabled={!isPlayerTurn || isGameFinished || checkCooldown('strong')}
         className={selectedAction === 'strong' ? 'action-active' : ''}
       >
-        Ataque Fuerte
+        💥
         <CooldownIndicator remaining={getCooldownRemaining('strong')} />
       </button>
       
@@ -40,7 +40,7 @@ const ActionButtons = ({
         disabled={!isPlayerTurn || isGameFinished || checkCooldown('dodge')}
         className={selectedAction === 'dodge' ? 'action-active' : ''}
       >
-        Esquivar
+        🛡️
         <CooldownIndicator remaining={getCooldownRemaining('dodge')} />
       </button>
       
@@ -51,7 +51,7 @@ const ActionButtons = ({
         disabled={!isPlayerTurn || isGameFinished || checkCooldown('heal')}
         className={selectedAction === 'heal' ? 'action-active' : ''}
       >
-        Curar
+        💚
         <CooldownIndicator remaining={getCooldownRemaining('heal')} />
       </button>
       
@@ -59,8 +59,9 @@ const ActionButtons = ({
         <button
           type="button"
           onClick={onRestartBattle}
+          className="restart-button"
         >
-          Reiniciar batalla
+          🔄
         </button>
       )}
     </div>
