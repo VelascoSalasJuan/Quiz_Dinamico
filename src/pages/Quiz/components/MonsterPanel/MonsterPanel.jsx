@@ -19,7 +19,9 @@ const MonsterPanel = ({
   getActionIcon, 
   getActionText, 
   onSelectAction, 
-  onRestartBattle 
+  onRestartBattle,
+  checkCooldown,
+  getCooldownRemaining
 }) => {
   return (
     <aside className="right-panel">
@@ -47,6 +49,8 @@ const MonsterPanel = ({
         isGameFinished={isGameFinished}
         onSelectAction={onSelectAction}
         onRestartBattle={onRestartBattle}
+        checkCooldown={checkCooldown}
+        getCooldownRemaining={getCooldownRemaining}
       />
     </aside>
   )

@@ -8,6 +8,13 @@ export function useBattleLogic(selectedMonster, gameLogic) {
   const [playerHp, setPlayerHp] = useState(PLAYER_MAX_HP)
   const [enemyHp, setEnemyHp] = useState(selectedMonster ? selectedMonster.hp : 100)
   const [nextEnemyAction, setNextEnemyAction] = useState('attack')
+  
+  // Estado de cooldowns para las habilidades
+  const [cooldowns, setCooldowns] = useState({
+    strong: 0,    // Ataque fuerte: 2 turnos
+    dodge: 0,     // Esquivar: 3 turnos
+    heal: 0       // Curar: 3 turnos
+  })
 
   const playerHpPercent = (playerHp / PLAYER_MAX_HP) * 100
   const enemyHpPercent = (enemyHp / (selectedMonster?.hp || 100)) * 100
@@ -42,12 +49,47 @@ export function useBattleLogic(selectedMonster, gameLogic) {
     setNextEnemyAction(null)
   }
 
+  // Función para verificar si una habilidad está en cooldown
+  const checkCooldown = (action) => {
+    return cooldowns[action] > 0
+  }
+
+  // Función para obtener el cooldown restante de una habilidad
+  const getCooldownRemaining = (action) => {
+    return cooldowns[action] || 0
+  }
+
+  // Función para reducir todos los cooldowns en 1
+  const reduceCooldowns = () => {
+    setCooldowns(prev => ({
+      strong: Math.max(0, prev.strong - 1),
+      dodge: Math.max(0, prev.dodge - 1),
+      heal: Math.max(0, prev.heal - 1)
+    }))
+  }
+
+  // Función para establecer cooldown a una habilidad
+  const setCooldown = (action, turns) => {
+    setCooldowns(prev => ({
+      ...prev,
+      [action]: turns
+    }))
+  }
+
+  // Configuración de cooldowns por habilidad
+  const COOLDOWN_CONFIG = {
+    strong: 2,  // Ataque fuerte: 2 turnos
+    dodge: 3,   // Esquivar: 3 turnos
+    heal: 3     // Curar: 3 turnos
+  }
+
   // Función para aplicar acción correcta del jugador
   const applyCorrectAction = (action) => {
     let battleEnded = false
 
     switch (action) {
       case 'attack':
+        // Ataque normal: sin cooldown, daño estándar
         const damage = PLAYER_ATTACK_DAMAGE
         const nextEnemyHp = Math.max(0, enemyHp - damage)
         setEnemyHp(nextEnemyHp)
@@ -60,16 +102,41 @@ export function useBattleLogic(selectedMonster, gameLogic) {
         }
         break
 
+      case 'strong':
+        // Ataque fuerte: con cooldown, más daño
+        if (!checkCooldown('strong')) {
+          const strongDamage = PLAYER_ATTACK_DAMAGE * 1.5
+          const strongNextEnemyHp = Math.max(0, enemyHp - strongDamage)
+          setEnemyHp(strongNextEnemyHp)
+          setCooldown('strong', COOLDOWN_CONFIG.strong)
+          if (strongNextEnemyHp <= 0) {
+            gameLogic.setTurn('finished')
+            gameLogic.setFeedbackMessage('¡Ganaste la batalla con un ataque fuerte!')
+            battleEnded = true
+          } else {
+            gameLogic.setFeedbackMessage(`Usaste ataque fuerte e hiciste ${strongDamage} de daño.`)
+          }
+        }
+        break
+
       case 'heal':
-        const healAmount = PLAYER_HEAL_AMOUNT
-        const newPlayerHp = Math.min(PLAYER_MAX_HP, playerHp + healAmount)
-        setPlayerHp(newPlayerHp)
-        gameLogic.setFeedbackMessage(`Te curaste y recuperaste ${healAmount} de vida.`)
+        // Curar: con cooldown, recupera vida
+        if (!checkCooldown('heal')) {
+          const healAmount = PLAYER_HEAL_AMOUNT
+          const newPlayerHp = Math.min(PLAYER_MAX_HP, playerHp + healAmount)
+          setPlayerHp(newPlayerHp)
+          setCooldown('heal', COOLDOWN_CONFIG.heal)
+          gameLogic.setFeedbackMessage(`Te curaste y recuperaste ${healAmount} de vida.`)
+        }
         break
 
       case 'dodge':
-        gameLogic.setDodgeReady(true)
-        gameLogic.setFeedbackMessage('Te preparas para esquivar el próximo ataque.')
+        // Esquivar: con cooldown, prepara esquiva
+        if (!checkCooldown('dodge')) {
+          gameLogic.setDodgeReady(true)
+          setCooldown('dodge', COOLDOWN_CONFIG.dodge)
+          gameLogic.setFeedbackMessage('Te preparas para esquivar el próximo ataque.')
+        }
         break
 
       default:
@@ -111,6 +178,10 @@ export function useBattleLogic(selectedMonster, gameLogic) {
       gameLogic.setSelectedAction(null)
 
       if (battleEnded) return
+
+      // Reducir cooldowns al final del turno del jugador
+      reduceCooldowns()
+      console.log('🔄 Cooldowns reducidos', cooldowns)
 
       const nextTurn = gameLogic.turnCount + 1
       gameLogic.setTurnCount(nextTurn)
@@ -242,6 +313,7 @@ export function useBattleLogic(selectedMonster, gameLogic) {
     playerHpPercent,
     enemyHpPercent,
     nextEnemyAction,
+    cooldowns,
     
     // Funciones de batalla
     handleOptionClick,
@@ -249,5 +321,10 @@ export function useBattleLogic(selectedMonster, gameLogic) {
     handleRestartBattle,
     predictNextEnemyAction,
     clearEnemyActionPrediction,
+    
+    // Funciones de cooldowns
+    checkCooldown,
+    getCooldownRemaining,
+    COOLDOWN_CONFIG,
   }
 }

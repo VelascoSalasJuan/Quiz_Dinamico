@@ -64,6 +64,8 @@ function QuizPage() {
           getActionText={gameLogic.getActionText}
           onSelectAction={gameLogic.selectAction}
           onRestartBattle={battleLogic.handleRestartBattle}
+          checkCooldown={battleLogic.checkCooldown}
+          getCooldownRemaining={battleLogic.getCooldownRemaining}
         />
       </section>
 
