@@ -16,6 +16,24 @@ export function useBattleLogic(selectedMonster, gameLogic) {
     heal: 0       // Curar: 3 turnos
   })
 
+  // Estado de cooldowns del enemigo
+  const [enemyCooldowns, setEnemyCooldowns] = useState({
+    strong: 0,    // Ataque fuerte: 2 turnos
+    dodge: 0,     // Esquivar: 3 turnos
+    heal: 0       // Curar: 3 turnos
+  })
+
+  // Estado para mostrar acciones seleccionadas en combate
+  const [battleActions, setBattleActions] = useState({
+    playerAction: null,
+    enemyAction: null,
+    showActions: false,
+    executingActions: false
+  })
+
+  // Estado para controlar cuándo mostrar la acción del enemigo
+  const [showEnemyAction, setShowEnemyAction] = useState(false)
+
   const playerHpPercent = (playerHp / PLAYER_MAX_HP) * 100
   const enemyHpPercent = (enemyHp / (selectedMonster?.hp || 100)) * 100
 
@@ -81,6 +99,30 @@ export function useBattleLogic(selectedMonster, gameLogic) {
     strong: 2,  // Ataque fuerte: 2 turnos
     dodge: 3,   // Esquivar: 3 turnos
     heal: 3     // Curar: 3 turnos
+  }
+
+  // Funciones para cooldowns del enemigo
+  const checkEnemyCooldown = (action) => {
+    return enemyCooldowns[action] > 0
+  }
+
+  const getEnemyCooldownRemaining = (action) => {
+    return enemyCooldowns[action] || 0
+  }
+
+  const reduceEnemyCooldowns = () => {
+    setEnemyCooldowns(prev => ({
+      strong: Math.max(0, prev.strong - 1),
+      dodge: Math.max(0, prev.dodge - 1),
+      heal: Math.max(0, prev.heal - 1)
+    }))
+  }
+
+  const setEnemyCooldown = (action, turns) => {
+    setEnemyCooldowns(prev => ({
+      ...prev,
+      [action]: turns
+    }))
   }
 
   // Función para aplicar acción correcta del jugador
@@ -164,38 +206,155 @@ export function useBattleLogic(selectedMonster, gameLogic) {
     const isCorrect = option === gameLogic.currentQuestion?.correctAnswer
     console.log('✅ Respuesta evaluada', { option, isCorrect, correctAnswer: gameLogic.currentQuestion?.correctAnswer })
     
-    let battleEnded = false
-
-    if (isCorrect) {
-      battleEnded = applyCorrectAction(gameLogic.selectedAction)
-    } else {
+    if (!isCorrect) {
       gameLogic.setFeedbackMessage('Fallaste la pregunta. Tu accion no se ejecuto.')
+      setTimeout(() => {
+        gameLogic.setSelectedOption(null)
+        gameLogic.setSelectedAction(null)
+      }, 1500)
+      return
     }
 
+    // Predecir acción del enemigo
+    const predictedEnemyAction = predictNextEnemyAction()
+    
+    // Paso 1: Mostrar acción del enemigo en el círculo
+    setShowEnemyAction(true)
+    gameLogic.setFeedbackMessage(`¡Respuesta correcta! El enemigo ha seleccionado su acción.`)
+    
+    // Paso 2: Después de una pausa, mostrar el BattleActionsDisplay
     setTimeout(() => {
-      console.log('⏰ Timeout ejecutándose', { battleEnded })
-      gameLogic.setSelectedOption(null)
-      gameLogic.setSelectedAction(null)
-
-      if (battleEnded) return
-
-      // Reducir cooldowns al final del turno del jugador
-      reduceCooldowns()
-      console.log('🔄 Cooldowns reducidos', cooldowns)
-
-      const nextTurn = gameLogic.turnCount + 1
-      gameLogic.setTurnCount(nextTurn)
-      gameLogic.advanceQuestionAndCategory(nextTurn)
-      gameLogic.advanceTimeline()
+      setBattleActions({
+        playerAction: gameLogic.selectedAction,
+        enemyAction: predictedEnemyAction,
+        showActions: true,
+        executingActions: false
+      })
       
-      // Predecir la próxima acción del enemigo ANTES de cambiar el turno
-      const predictedAction = predictNextEnemyAction()
-      const actionText = gameLogic.getActionText(predictedAction)
-      gameLogic.setFeedbackMessage(`El monstruo preparará: ${actionText}`)
+      gameLogic.setFeedbackMessage(`¡Respuesta correcta! Ambos han seleccionado sus acciones.`)
       
-      console.log('🔄 Cambiando a turno del enemigo', { predictedAction })
-      gameLogic.setTurn('enemy')
+      // Paso 3: Después de mostrar las acciones, ejecutarlas
+      setTimeout(() => {
+        executeBattleActions(gameLogic.selectedAction, predictedEnemyAction)
+      }, 2000)
     }, 1500)
+  }
+
+  // Función para ejecutar las acciones de batalla
+  const executeBattleActions = (playerAction, enemyAction) => {
+    console.log('⚔️ Ejecutando acciones de batalla', { playerAction, enemyAction })
+    
+    setBattleActions(prev => ({ ...prev, executingActions: true }))
+    gameLogic.setFeedbackMessage('⚔️ Ejecutando acciones...')
+    
+    let battleEnded = false
+    
+    // Aplicar acción del jugador
+    battleEnded = applyCorrectAction(playerAction)
+    
+    if (battleEnded) {
+      setTimeout(() => {
+        resetBattleState()
+      }, 1500)
+      return
+    }
+    
+    // Aplicar acción del enemigo
+    setTimeout(() => {
+      battleEnded = applyEnemyAction(enemyAction)
+      
+      if (battleEnded) {
+        setTimeout(() => {
+          resetBattleState()
+        }, 1500)
+      } else {
+        setTimeout(() => {
+          proceedToNextTurn()
+        }, 1500)
+      }
+    }, 1000)
+  }
+
+  // Función para aplicar acción del enemigo
+  const applyEnemyAction = (action) => {
+    let battleEnded = false
+    
+    switch (action) {
+      case 'attack':
+        const damage = selectedMonster.attack
+        const nextPlayerHp = Math.max(0, playerHp - damage)
+        setPlayerHp(nextPlayerHp)
+        gameLogic.setFeedbackMessage(`El monstruo atacó e hizo ${damage} de daño.`)
+        if (nextPlayerHp <= 0) {
+          gameLogic.setTurn('finished')
+          gameLogic.setFeedbackMessage('Perdiste la batalla.')
+          battleEnded = true
+        }
+        break
+        
+      case 'strong':
+        if (!checkEnemyCooldown('strong')) {
+          const strongDamage = Math.floor(selectedMonster.attack * 1.5)
+          const strongNextPlayerHp = Math.max(0, playerHp - strongDamage)
+          setPlayerHp(strongNextPlayerHp)
+          setEnemyCooldown('strong', COOLDOWN_CONFIG.strong)
+          gameLogic.setFeedbackMessage(`¡El monstruo usó ataque fuerte e hizo ${strongDamage} de daño!`)
+          if (strongNextPlayerHp <= 0) {
+            gameLogic.setTurn('finished')
+            gameLogic.setFeedbackMessage('Perdiste la batalla.')
+            battleEnded = true
+          }
+        }
+        break
+        
+      case 'heal':
+        if (!checkEnemyCooldown('heal')) {
+          const healAmount = Math.floor(selectedMonster.hp * 0.3)
+          const newEnemyHp = Math.min(selectedMonster.hp, enemyHp + healAmount)
+          setEnemyHp(newEnemyHp)
+          setEnemyCooldown('heal', COOLDOWN_CONFIG.heal)
+          gameLogic.setFeedbackMessage(`El monstruo se curó y recuperó ${healAmount} de vida.`)
+        }
+        break
+        
+      case 'dodge':
+        if (!checkEnemyCooldown('dodge')) {
+          gameLogic.setDodgeReady(true)
+          setEnemyCooldown('dodge', COOLDOWN_CONFIG.dodge)
+          gameLogic.setFeedbackMessage('El monstruo se prepara para esquivar.')
+        }
+        break
+    }
+    
+    return battleEnded
+  }
+
+  // Función para resetear el estado de batalla
+  const resetBattleState = () => {
+    setBattleActions({
+      playerAction: null,
+      enemyAction: null,
+      showActions: false,
+      executingActions: false
+    })
+    setShowEnemyAction(false)
+    gameLogic.setSelectedOption(null)
+    gameLogic.setSelectedAction(null)
+  }
+
+  // Función para proceder al siguiente turno
+  const proceedToNextTurn = () => {
+    // Reducir cooldowns
+    reduceCooldowns()
+    reduceEnemyCooldowns()
+    console.log('🔄 Cooldowns reducidos', { player: cooldowns, enemy: enemyCooldowns })
+
+    const nextTurn = gameLogic.turnCount + 1
+    gameLogic.setTurnCount(nextTurn)
+    gameLogic.advanceQuestionAndCategory(nextTurn)
+    gameLogic.advanceTimeline()
+    
+    resetBattleState()
   }
 
   // Función para obtener clase de opción
@@ -283,6 +442,10 @@ export function useBattleLogic(selectedMonster, gameLogic) {
       gameLogic.setFeedbackMessage(message)
       gameLogic.advanceTimeline()
       
+      // Reducir cooldowns del enemigo al final de su turno
+      reduceEnemyCooldowns()
+      console.log('🔄 Cooldowns del enemigo reducidos', enemyCooldowns)
+
       // Limpiar la predicción después de ejecutar
       clearEnemyActionPrediction()
       
@@ -314,6 +477,9 @@ export function useBattleLogic(selectedMonster, gameLogic) {
     enemyHpPercent,
     nextEnemyAction,
     cooldowns,
+    enemyCooldowns,
+    battleActions,
+    showEnemyAction,
     
     // Funciones de batalla
     handleOptionClick,
@@ -325,6 +491,8 @@ export function useBattleLogic(selectedMonster, gameLogic) {
     // Funciones de cooldowns
     checkCooldown,
     getCooldownRemaining,
+    checkEnemyCooldown,
+    getEnemyCooldownRemaining,
     COOLDOWN_CONFIG,
   }
 }

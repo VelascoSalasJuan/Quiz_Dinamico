@@ -1,0 +1,144 @@
+.battle-actions-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 1rem 0;
+  padding: 1rem;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  border-radius: 0.75rem;
+  border: 2px solid #cbd5e1;
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.actions-title {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #475569;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  text-align: center;
+}
+
+.actions-container {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  justify-content: center;
+}
+
+.action-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  min-width: 120px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.action-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: currentColor;
+}
+
+.action-card.selected {
+  background: #ffffff;
+  border: 2px solid #3b82f6;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+  transform: scale(1.05);
+}
+
+.action-card.selected::before {
+  background: #3b82f6;
+}
+
+.action-card.executing {
+  background: #fef3c7;
+  border: 2px solid #f59e0b;
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+  animation: pulse 1s infinite;
+}
+
+.action-card.executing::before {
+  background: #f59e0b;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1.05);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+.player-action.selected {
+  color: #3b82f6;
+}
+
+.player-action.executing {
+  color: #f59e0b;
+}
+
+.enemy-action.selected {
+  color: #ef4444;
+}
+
+.enemy-action.executing {
+  color: #f59e0b;
+}
+
+.action-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  opacity: 0.8;
+}
+
+.action-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.action-emoji {
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.action-name {
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.vs-divider {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #64748b;
+  text-align: center;
+  padding: 0 0.5rem;
+}

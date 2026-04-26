@@ -66,6 +66,10 @@ function QuizPage() {
           onRestartBattle={battleLogic.handleRestartBattle}
           checkCooldown={battleLogic.checkCooldown}
           getCooldownRemaining={battleLogic.getCooldownRemaining}
+          checkEnemyCooldown={battleLogic.checkEnemyCooldown}
+          getEnemyCooldownRemaining={battleLogic.getEnemyCooldownRemaining}
+          battleActions={battleLogic.battleActions}
+          showEnemyAction={battleLogic.showEnemyAction}
         />
       </section>
 

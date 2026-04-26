@@ -2,6 +2,8 @@ import './MonsterPanel.css'
 import NextActionIndicator from './subcomponents/NextActionIndicator.jsx'
 import HealthBars from './subcomponents/HealthBars.jsx'
 import ActionButtons from './subcomponents/ActionButtons.jsx'
+import EnemyStatusDisplay from './subcomponents/EnemyStatusDisplay/EnemyStatusDisplay.jsx'
+import BattleActionsDisplay from './subcomponents/BattleActionsDisplay/BattleActionsDisplay.jsx'
 
 const MonsterPanel = ({ 
   selectedMonster, 
@@ -21,7 +23,11 @@ const MonsterPanel = ({
   onSelectAction, 
   onRestartBattle,
   checkCooldown,
-  getCooldownRemaining
+  getCooldownRemaining,
+  checkEnemyCooldown,
+  getEnemyCooldownRemaining,
+  battleActions,
+  showEnemyAction
 }) => {
   return (
     <aside className="right-panel">
@@ -31,9 +37,24 @@ const MonsterPanel = ({
           nextAction={nextAction}
           getActionIcon={getActionIcon}
           getActionText={getActionText}
+          showQuestion={!showEnemyAction}
         />
       </div>
       <h2>{selectedMonster.name}</h2>
+      
+      {/* Nuevo componente de estado del enemigo */}
+      <EnemyStatusDisplay 
+        getEnemyCooldownRemaining={getEnemyCooldownRemaining}
+        checkEnemyCooldown={checkEnemyCooldown}
+      />
+      
+      {/* Componente para mostrar acciones seleccionadas */}
+      <BattleActionsDisplay 
+        battleActions={battleActions}
+        getActionIcon={getActionIcon}
+        getActionText={getActionText}
+      />
+      
       <HealthBars 
         playerHp={playerHp}
         enemyHp={enemyHp}
