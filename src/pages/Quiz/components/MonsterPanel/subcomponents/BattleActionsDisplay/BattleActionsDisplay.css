@@ -101,6 +101,44 @@
   color: #f59e0b;
 }
 
+.player-action.failed {
+  color: #dc2626;
+  background: #fee2e2 !important;
+  border: 2px solid #dc2626 !important;
+  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3) !important;
+  animation: shake 0.5s ease-in-out;
+}
+
+.player-action.failed.executing {
+  background: #fee2e2 !important;
+  border: 2px solid #dc2626 !important;
+  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.5) !important;
+  animation: failedPulse 1s infinite;
+}
+
+@keyframes failedPulse {
+  0%, 100% {
+    transform: scale(1.05);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.8;
+  }
+}
+
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  75% {
+    transform: translateX(5px);
+  }
+}
+
 .enemy-action.selected {
   color: #ef4444;
 }
@@ -141,4 +179,37 @@
   color: #64748b;
   text-align: center;
   padding: 0 0.5rem;
+}
+
+.failed-x {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: #dc2626;
+  color: white;
+  font-size: 1.25rem;
+  font-weight: bold;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(220, 38, 38, 0.4);
+  animation: popIn 0.3s ease-out;
+  z-index: 10;
+}
+
+@keyframes popIn {
+  0% {
+    transform: scale(0) rotate(-180deg);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.2) rotate(10deg);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
 }

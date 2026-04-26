@@ -28,7 +28,8 @@ export function useBattleLogic(selectedMonster, gameLogic) {
     playerAction: null,
     enemyAction: null,
     showActions: false,
-    executingActions: false
+    executingActions: false,
+    playerFailed: false
   })
 
   // Estado para controlar cuándo mostrar la acción del enemigo
@@ -207,11 +208,32 @@ export function useBattleLogic(selectedMonster, gameLogic) {
     console.log('✅ Respuesta evaluada', { option, isCorrect, correctAnswer: gameLogic.currentQuestion?.correctAnswer })
     
     if (!isCorrect) {
-      gameLogic.setFeedbackMessage('Fallaste la pregunta. Tu accion no se ejecuto.')
+      gameLogic.setFeedbackMessage('Fallaste la pregunta. Tu accion fallo.')
+      
+      // Predecir acción del enemigo
+      const predictedEnemyAction = predictNextEnemyAction()
+      
+      // Mostrar acción del enemigo
+      setShowEnemyAction(true)
+      
       setTimeout(() => {
-        gameLogic.setSelectedOption(null)
-        gameLogic.setSelectedAction(null)
+        // Mostrar ambas acciones (jugador fallido, enemigo normal)
+        setBattleActions({
+          playerAction: gameLogic.selectedAction,
+          enemyAction: predictedEnemyAction,
+          showActions: true,
+          executingActions: false,
+          playerFailed: true
+        })
+        
+        gameLogic.setFeedbackMessage('Fallaste la pregunta. Tu accion fallo pero el enemigo atacara.')
+        
+        // Ejecutar acciones: jugador falla, enemigo ataca
+        setTimeout(() => {
+          executePunishmentActions(gameLogic.selectedAction, predictedEnemyAction)
+        }, 2000)
       }, 1500)
+      
       return
     }
 
@@ -262,6 +284,33 @@ export function useBattleLogic(selectedMonster, gameLogic) {
     // Aplicar acción del enemigo
     setTimeout(() => {
       battleEnded = applyEnemyAction(enemyAction)
+      
+      if (battleEnded) {
+        setTimeout(() => {
+          resetBattleState()
+        }, 1500)
+      } else {
+        setTimeout(() => {
+          proceedToNextTurn()
+        }, 1500)
+      }
+    }, 1000)
+  }
+
+  // Función para ejecutar acciones de castigo (jugador falla, enemigo ataca)
+  const executePunishmentActions = (playerAction, enemyAction) => {
+    console.log('💀 Ejecutando castigo', { playerAction, enemyAction })
+    
+    setBattleActions(prev => ({ ...prev, executingActions: true }))
+    gameLogic.setFeedbackMessage('💀 Tu accion fallo...')
+    
+    // Jugador falla - no hace nada
+    gameLogic.setFeedbackMessage('Tu accion fallo completamente.')
+    
+    // Enemigo ataca después
+    setTimeout(() => {
+      gameLogic.setFeedbackMessage('El enemigo te ataca mientras estas vulnerable.')
+      const battleEnded = applyEnemyAction(enemyAction)
       
       if (battleEnded) {
         setTimeout(() => {
@@ -335,7 +384,8 @@ export function useBattleLogic(selectedMonster, gameLogic) {
       playerAction: null,
       enemyAction: null,
       showActions: false,
-      executingActions: false
+      executingActions: false,
+      playerFailed: false
     })
     setShowEnemyAction(false)
     gameLogic.setSelectedOption(null)

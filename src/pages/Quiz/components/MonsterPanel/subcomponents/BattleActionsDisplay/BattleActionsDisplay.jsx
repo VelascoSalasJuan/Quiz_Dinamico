@@ -17,12 +17,13 @@ const BattleActionsDisplay = ({ battleActions, getActionIcon, getActionText }) =
     <div className="battle-actions-display">
       <div className="actions-title">⚔️ Acciones Seleccionadas</div>
       <div className="actions-container">
-        <div className={`action-card player-action ${battleActions.executingActions ? 'executing' : 'selected'}`}>
+        <div className={`action-card player-action ${battleActions.playerFailed ? 'failed' : battleActions.executingActions ? 'executing' : 'selected'}`}>
           <div className="action-label">Jugador</div>
           <div className="action-content">
             <span className="action-emoji">{getActionEmoji(battleActions.playerAction)}</span>
             <span className="action-name">{getActionText(battleActions.playerAction)}</span>
           </div>
+          {battleActions.playerFailed && <div className="failed-x">✕</div>}
         </div>
         
         <div className="vs-divider">VS</div>
