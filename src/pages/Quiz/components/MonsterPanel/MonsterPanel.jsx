@@ -31,7 +31,9 @@ const MonsterPanel = ({
   checkCooldown,
   getCooldownRemaining,
   checkEnemyCooldown,
-  getEnemyCooldownRemaining
+  getEnemyCooldownRemaining,
+  playerDamageIndicator,
+  enemyDamageIndicator
 }) => {
   return (
     <aside className="right-panel">
@@ -66,6 +68,8 @@ const MonsterPanel = ({
         enemyMaxHp={enemyMaxHp}
         playerHpPercent={playerHpPercent}
         enemyHpPercent={enemyHpPercent}
+        playerDamageIndicator={playerDamageIndicator}
+        enemyDamageIndicator={enemyDamageIndicator}
       />
       <p className="battle-feedback">{feedbackMessage}</p>
       <ActionButtons 
