@@ -18,6 +18,12 @@ const MonsterPanel = ({
   isGameFinished, 
   feedbackMessage, 
   nextAction, 
+  cooldowns, 
+  enemyCooldowns, 
+  nextEnemyAction, 
+  displayEnemyAction, 
+  battleActions, 
+  showEnemyAction, 
   getActionIcon, 
   getActionText, 
   onSelectAction, 
@@ -25,16 +31,14 @@ const MonsterPanel = ({
   checkCooldown,
   getCooldownRemaining,
   checkEnemyCooldown,
-  getEnemyCooldownRemaining,
-  battleActions,
-  showEnemyAction
+  getEnemyCooldownRemaining
 }) => {
   return (
     <aside className="right-panel">
       <div className="monster-container">
         <div className="monster-model">{selectedMonster.icon}</div>
         <NextActionIndicator 
-          nextAction={nextAction}
+          nextAction={displayEnemyAction || nextAction}
           getActionIcon={getActionIcon}
           getActionText={getActionText}
           showQuestion={!showEnemyAction}

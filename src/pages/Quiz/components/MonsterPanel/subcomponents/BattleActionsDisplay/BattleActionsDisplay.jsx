@@ -20,8 +20,8 @@ const BattleActionsDisplay = ({ battleActions, getActionIcon, getActionText }) =
         <div className={`action-card player-action ${battleActions.playerFailed ? 'failed' : battleActions.executingActions ? 'executing' : 'selected'}`}>
           <div className="action-label">Jugador</div>
           <div className="action-content">
-            <span className="action-emoji">{getActionEmoji(battleActions.playerAction)}</span>
-            <span className="action-name">{getActionText(battleActions.playerAction)}</span>
+            <span className="action-emoji">{battleActions.playerAction ? getActionEmoji(battleActions.playerAction) : '❓'}</span>
+            <span className="action-name">{battleActions.playerAction ? getActionText(battleActions.playerAction) : 'Esperando...'}</span>
           </div>
           {battleActions.playerFailed && <div className="failed-x">✕</div>}
         </div>
@@ -31,8 +31,8 @@ const BattleActionsDisplay = ({ battleActions, getActionIcon, getActionText }) =
         <div className={`action-card enemy-action ${battleActions.executingActions ? 'executing' : 'selected'}`}>
           <div className="action-label">Enemigo</div>
           <div className="action-content">
-            <span className="action-emoji">{getActionEmoji(battleActions.enemyAction)}</span>
-            <span className="action-name">{getActionText(battleActions.enemyAction)}</span>
+            <span className="action-emoji">{battleActions.enemyAction ? getActionEmoji(battleActions.enemyAction) : '❓'}</span>
+            <span className="action-name">{battleActions.enemyAction ? getActionText(battleActions.enemyAction) : 'Esperando...'}</span>
           </div>
         </div>
       </div>

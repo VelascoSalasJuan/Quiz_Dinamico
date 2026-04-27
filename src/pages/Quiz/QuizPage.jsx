@@ -59,17 +59,20 @@ function QuizPage() {
           isPlayerTurn={gameLogic.isPlayerTurn}
           isGameFinished={gameLogic.isGameFinished}
           feedbackMessage={gameLogic.feedbackMessage}
-          nextAction={battleLogic.nextEnemyAction}
+          onSelectAction={gameLogic.setSelectedAction}
+          onRestartBattle={battleLogic.handleRestartBattle}
+          cooldowns={battleLogic.cooldowns}
+          enemyCooldowns={battleLogic.enemyCooldowns}
+          nextEnemyAction={battleLogic.nextEnemyAction}
+          displayEnemyAction={battleLogic.displayEnemyAction}
+          battleActions={battleLogic.battleActions}
+          showEnemyAction={battleLogic.showEnemyAction}
           getActionIcon={gameLogic.getActionIcon}
           getActionText={gameLogic.getActionText}
-          onSelectAction={gameLogic.selectAction}
-          onRestartBattle={battleLogic.handleRestartBattle}
           checkCooldown={battleLogic.checkCooldown}
           getCooldownRemaining={battleLogic.getCooldownRemaining}
           checkEnemyCooldown={battleLogic.checkEnemyCooldown}
           getEnemyCooldownRemaining={battleLogic.getEnemyCooldownRemaining}
-          battleActions={battleLogic.battleActions}
-          showEnemyAction={battleLogic.showEnemyAction}
         />
       </section>
 
