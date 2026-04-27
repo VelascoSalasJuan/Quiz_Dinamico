@@ -73,6 +73,8 @@ function QuizPage() {
           getCooldownRemaining={battleLogic.getCooldownRemaining}
           checkEnemyCooldown={battleLogic.checkEnemyCooldown}
           getEnemyCooldownRemaining={battleLogic.getEnemyCooldownRemaining}
+          playerDamageIndicator={battleLogic.playerDamageIndicator}
+          enemyDamageIndicator={battleLogic.enemyDamageIndicator}
         />
       </section>
 

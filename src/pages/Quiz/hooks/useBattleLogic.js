@@ -8,181 +8,7 @@ export function useBattleLogic(selectedMonster, gameLogic) {
   const enemyAI = useEnemyAI(abilities.enemyCooldowns)
   const battleState = useBattleState(selectedMonster)
   
-  // Función para procesar batalla (compara acciones y aplica efectos simultáneamente)
-  const processBattle = (playerAction, enemyAction) => {
-    console.log(`[COMPARACIÓN DE ACCIONES]`)
-    console.log(`- Jugador: ${playerAction}`)
-    console.log(`- Enemigo: ${enemyAction}`)
-    console.log(``)
     
-    let battleEnded = false
-    let playerDamage = 0
-    let enemyDamage = 0
-    
-    // Procesar acción del jugador
-    if (playerAction === 'attack') {
-      // Verificar si el enemigo está esquivando (dodge usado este turno)
-      if (enemyAction === 'dodge') {
-        console.log(`🛡️ Enemigo esquivó tu ataque`)
-        gameLogic.setFeedbackMessage('El monstruo esquivó tu ataque.')
-      } else {
-        enemyDamage = ATTACK_DAMAGE
-      }
-    } else if (playerAction === 'strong') {
-      // Verificar si el enemigo está esquivando (dodge usado este turno)
-      if (enemyAction === 'dodge') {
-        console.log(`🛡️ Enemigo esquivó tu ataque fuerte`)
-        gameLogic.setFeedbackMessage('El monstruo esquivó tu ataque fuerte.')
-        
-        // El jugador igual pone su cooldown aunque no haga daño
-        setCooldowns(prev => ({
-          ...prev,
-          strong: STRONG_COOLDOWN
-        }))
-        console.log(`⏱️ Strong en cooldown por ${STRONG_COOLDOWN} turnos`)
-      } else {
-        enemyDamage = STRONG_DAMAGE
-        // Aplicar cooldown de strong
-        setCooldowns(prev => ({
-          ...prev,
-          strong: STRONG_COOLDOWN
-        }))
-        console.log(`⏱️ Strong en cooldown por ${STRONG_COOLDOWN} turnos`)
-      }
-    } else if (playerAction === 'dodge') {
-      // Dodge del jugador es activo inmediatamente para este turno
-      setCooldowns(prev => ({
-        ...prev,
-        dodge: DODGE_COOLDOWN
-      }))
-      console.log(`🛡️ Jugador usa dodge: Activo para este turno`)
-      console.log(`⏱️ Dodge en cooldown por ${DODGE_COOLDOWN} turnos`)
-      gameLogic.setFeedbackMessage(`Te preparas para esquivar el ataque del enemigo.`)
-    } else if (playerAction === 'heal') {
-      // Heal del jugador
-      setCooldowns(prev => ({
-        ...prev,
-        heal: HEAL_COOLDOWN
-      }))
-      console.log(`💚 Jugador usa heal: Activo para este turno`)
-      console.log(`⏱️ Heal en cooldown por ${HEAL_COOLDOWN} turnos`)
-      gameLogic.setFeedbackMessage(`Te curas ${HEAL_AMOUNT} puntos de vida.`)
-    }
-    
-    // Procesar acción del enemigo
-    if (enemyAction === 'attack') {
-      // Verificar si el jugador está esquivando (dodge usado este turno)
-      if (playerAction === 'dodge') {
-        console.log(`🛡️ Jugador esquivó el ataque del enemigo`)
-        gameLogic.setFeedbackMessage('Esquivaste el ataque del monstruo.')
-      } else {
-        playerDamage = ATTACK_DAMAGE
-      }
-    } else if (enemyAction === 'strong') {
-      // Verificar si el jugador está esquivando (dodge usado este turno)
-      if (playerAction === 'dodge') {
-        console.log(`🛡️ Jugador esquivó el ataque fuerte del enemigo`)
-        gameLogic.setFeedbackMessage('Esquivaste el ataque fuerte del monstruo.')
-        
-        // El enemigo igual pone su cooldown aunque no haga daño
-        setEnemyCooldowns(prev => ({
-          ...prev,
-          strong: STRONG_COOLDOWN
-        }))
-        console.log(`⏱️ Strong enemigo en cooldown por ${STRONG_COOLDOWN} turnos`)
-      } else {
-        playerDamage = STRONG_DAMAGE
-        // Aplicar cooldown de strong del enemigo
-        //setEnemyCooldowns(prev => ({
-        //  ...prev,
-        //  strong: STRONG_COOLDOWN
-        //}))
-        console.log(`⏱️ Strong enemigo en cooldown por ${STRONG_COOLDOWN} turnos`)
-      }
-    } else if (enemyAction === 'dodge') {
-      // Dodge del enemigo es activo inmediatamente para este turno
-      setEnemyCooldowns(prev => ({
-        ...prev,
-        dodge: DODGE_COOLDOWN
-      }))
-      console.log(`🛡️ Enemigo usa dodge: Activo para este turno`)
-      console.log(`⏱️ Dodge enemigo en cooldown por ${DODGE_COOLDOWN} turnos`)
-      gameLogic.setFeedbackMessage(`El monstruo se prepara para esquivar tu ataque.`)
-    } else if (enemyAction === 'heal') {
-      // Heal del enemigo
-      setEnemyCooldowns(prev => ({
-        ...prev,
-        heal: HEAL_COOLDOWN
-      }))
-      console.log(`💚 Enemigo usa heal: Activo para este turno`)
-      console.log(`⏱️ Heal enemigo en cooldown por ${HEAL_COOLDOWN} turnos`)
-      gameLogic.setFeedbackMessage(`El monstruo se cura ${HEAL_AMOUNT} puntos de vida.`)
-    }
-    
-    // Aplicar daño a ambos simultáneamente
-    console.log(`[APLICAR EFECTOS]`)
-    
-    // Aplicar efectos al enemigo
-    if (enemyDamage > 0) {
-      const newEnemyHp = Math.max(0, enemyHp - enemyDamage)
-      setEnemyHp(newEnemyHp)
-      
-      if (playerAction === 'attack') {
-        console.log(`⚔️ Jugador ataca: -${enemyDamage} HP (Enemigo: ${newEnemyHp}/${enemyMaxHp})`)
-        gameLogic.setFeedbackMessage(`Atacaste e hiciste ${enemyDamage} de daño.`)
-      } else if (playerAction === 'strong') {
-        console.log(`💥 Jugador usa ataque fuerte: -${enemyDamage} HP (Enemigo: ${newEnemyHp}/100)`)
-        gameLogic.setFeedbackMessage(`Usaste ataque fuerte e hiciste ${enemyDamage} de daño.`)
-      }
-      
-      if (newEnemyHp <= 0) {
-        gameLogic.setTurn('finished')
-        gameLogic.setFeedbackMessage('¡Ganaste la batalla!')
-        battleEnded = true
-      }
-    }
-    
-    // Aplicar efectos al jugador
-    if (playerDamage > 0 && !battleEnded) {
-      const newPlayerHp = Math.max(0, playerHp - playerDamage)
-      setPlayerHp(newPlayerHp)
-      
-      if (enemyAction === 'attack') {
-        console.log(`👹 Enemigo ataca: -${playerDamage} HP (Jugador: ${newPlayerHp}/100)`)
-        gameLogic.setFeedbackMessage(`El monstruo atacó e hizo ${playerDamage} de daño.`)
-      } else if (enemyAction === 'strong') {
-        console.log(`👹 Enemigo usa ataque fuerte: -${playerDamage} HP (Jugador: ${newPlayerHp}/100)`)
-        gameLogic.setFeedbackMessage(`¡El monstruo usó ataque fuerte e hizo ${playerDamage} de daño!`)
-      }
-      
-      if (newPlayerHp <= 0) {
-        gameLogic.setTurn('finished')
-        gameLogic.setFeedbackMessage('Perdiste la batalla.')
-        battleEnded = true
-      }
-    }
-    
-    // Aplicar curación al jugador
-    if (playerAction === 'heal' && !battleEnded) {
-      const newPlayerHp = Math.min(100, playerHp + HEAL_AMOUNT)
-      setPlayerHp(newPlayerHp)
-      console.log(`💚 Jugador se cura: +${HEAL_AMOUNT} HP (Jugador: ${newPlayerHp}/100)`)
-      gameLogic.setFeedbackMessage(`Te curaste ${HEAL_AMOUNT} puntos de vida.`)
-    }
-    
-    // Aplicar curación al enemigo
-    if (enemyAction === 'heal' && !battleEnded) {
-      // Calcular curación basada en el HP ANTES del daño
-      const enemyHpBeforeDamage = enemyHp - enemyDamage
-      const newEnemyHp = Math.min(100, enemyHpBeforeDamage + HEAL_AMOUNT)
-      setEnemyHp(newEnemyHp)
-      console.log(`💚 Enemigo se cura: +${HEAL_AMOUNT} HP (Enemigo: ${newEnemyHp}/100)`)
-      gameLogic.setFeedbackMessage(`El monstruo se curó ${HEAL_AMOUNT} puntos de vida.`)
-    }
-    
-    return battleEnded
-  }
-  
   
   
     
@@ -248,6 +74,10 @@ export function useBattleLogic(selectedMonster, gameLogic) {
         if (enemyAction !== 'attack' && enemyAction !== 'dodge') {
           abilities.setCooldown(enemyAction, true)
         }
+        // Aplicar cooldown para dodge del enemigo
+        if (enemyAction === 'dodge') {
+          abilities.setCooldown('dodge', true)
+        }
         
         // Resetear para siguiente turno después de procesar
         setTimeout(() => {
@@ -279,6 +109,11 @@ export function useBattleLogic(selectedMonster, gameLogic) {
         // Ejecutar ataque normal del enemigo (castigo)
         const playerDamage = abilities.ABILITIES.ATTACK.damage
         const newPlayerHp = Math.max(0, battleState.playerHp - playerDamage)
+        
+        // Mostrar indicador de daño al jugador
+        battleState.setPlayerDamageIndicator(-playerDamage)
+        setTimeout(() => battleState.setPlayerDamageIndicator(null), 2000)
+        
         battleState.setPlayerHp(newPlayerHp)
         gameLogic.setFeedbackMessage(`El monstruo atacó e hizo ${playerDamage} de daño.`)
         
