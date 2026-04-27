@@ -968,72 +968,7 @@ export function useBattleLogic(selectedMonster, gameLogic) {
     return battleEnded
   }
   
-  // Función para ejecutar ataque fuerte del jugador
-  const executePlayerStrong = () => {
-    const newEnemyHp = Math.max(0, enemyHp - STRONG_DAMAGE)
-    setEnemyHp(newEnemyHp)
     
-    // Establecer cooldown
-    setCooldowns(prev => ({
-      ...prev,
-      strong: STRONG_COOLDOWN
-    }))
-    
-    console.log(`💥 Jugador usa ataque fuerte: -${STRONG_DAMAGE} HP (Enemigo: ${newEnemyHp}/100)`)
-    console.log(`⏱️ Strong en cooldown por ${STRONG_COOLDOWN} turnos`)
-    gameLogic.setFeedbackMessage(`Usaste ataque fuerte e hiciste ${STRONG_DAMAGE} de daño.`)
-    
-    if (newEnemyHp <= 0) {
-      gameLogic.setTurn('finished')
-      gameLogic.setFeedbackMessage('¡Ganaste la batalla con un ataque fuerte!')
-      return true // Batalla terminada
-    }
-    
-    return false // Batalla continúa
-  }
-  
-    
-  // Función para ejecutar ataque básico del enemigo
-  const executeEnemyAttack = () => {
-    const newPlayerHp = Math.max(0, playerHp - ATTACK_DAMAGE)
-    setPlayerHp(newPlayerHp)
-    
-    console.log(`👹 Enemigo ataca: -${ATTACK_DAMAGE} HP (Jugador: ${newPlayerHp}/100)`)
-    gameLogic.setFeedbackMessage(`El monstruo atacó e hizo ${ATTACK_DAMAGE} de daño.`)
-    
-    if (newPlayerHp <= 0) {
-      gameLogic.setTurn('finished')
-      gameLogic.setFeedbackMessage('Perdiste la batalla.')
-      return true // Batalla terminada
-    }
-    
-    return false // Batalla continúa
-  }
-  
-  // Función para ejecutar ataque fuerte del enemigo
-  const executeEnemyStrong = () => {
-    const newPlayerHp = Math.max(0, playerHp - STRONG_DAMAGE)
-    setPlayerHp(newPlayerHp)
-    
-    // Establecer cooldown del enemigo
-    setEnemyCooldowns(prev => ({
-      ...prev,
-      strong: STRONG_COOLDOWN
-    }))
-    
-    console.log(`👹 Enemigo usa ataque fuerte: -${STRONG_DAMAGE} HP (Jugador: ${newPlayerHp}/100)`)
-    console.log(`⏱️ Strong enemigo en cooldown por ${STRONG_COOLDOWN} turnos`)
-    gameLogic.setFeedbackMessage(`¡El monstruo usó ataque fuerte e hizo ${STRONG_DAMAGE} de daño!`)
-    
-    if (newPlayerHp <= 0) {
-      gameLogic.setTurn('finished')
-      gameLogic.setFeedbackMessage('Perdiste la batalla.')
-      return true // Batalla terminada
-    }
-    
-    return false // Batalla continúa
-  }
-  
   // Función para generar acción aleatoria del enemigo
   const generateEnemyAction = () => {
     const randomChoice = Math.floor(Math.random() * 4) + 1 // 1, 2, 3 o 4
