@@ -8,7 +8,7 @@ const HeroAbilityContent = ({ selectedAction, heroAbilityImages, getActionText, 
 
   return (
     <>
-      {<HeroAbilityGlow isAttacking={isAttacking}>
+      {  <HeroAbilityGlow isAttacking={isAttacking}>
         <div className="ability-content hero-ability-content">
           <HeroAbilityCircle selectedAction={selectedAction} heroAbilityImages={heroAbilityImages} getActionText={getActionText} battleActions={battleActions} enableCircleGlow={enableCircleGlow} />
           <HeroAbilityText selectedAction={selectedAction} getActionText={getActionText} battleActions={battleActions} />
