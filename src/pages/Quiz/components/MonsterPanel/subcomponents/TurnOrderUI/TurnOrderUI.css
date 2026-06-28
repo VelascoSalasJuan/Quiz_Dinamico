@@ -1,0 +1,75 @@
+.turn-order-ui {
+  position: absolute;
+  bottom: 20px;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  z-index: 20;
+}
+
+
+.test-button {
+  position: absolute;
+  top: -30px;
+  right: 0;
+  background: rgba(200, 134, 10, 0.8);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s ease;
+}
+
+.test-button:hover {
+  background: rgba(200, 134, 10, 1);
+}
+
+.turn-order-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  min-height: 200px;
+  justify-content: flex-start;
+  z-index: 1;
+  position: relative;
+}
+
+.marco-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.skulls-chain {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  transition: transform 0.5s ease, opacity 0.5s ease;
+  max-height: 150px;
+  overflow: hidden;
+  flex-grow: 1;
+}
+
+.skulls-chain.sliding-up {
+  transform: translateY(-20px);
+  opacity: 0.5;
+}
+
+.chain-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}

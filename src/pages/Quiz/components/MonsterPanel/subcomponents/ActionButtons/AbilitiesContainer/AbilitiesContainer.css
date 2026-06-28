@@ -1,0 +1,16 @@
+.abilities-container {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
+  background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 50%, #2563eb 100%);
+  padding: 1rem;
+  border-radius: 0;
+  box-shadow: 0 8px 24px rgba(30, 58, 138, 0.3);
+  border: 2px solid #3b82f6;
+  border-bottom: none;
+  width: 100%;
+  box-sizing: border-box;
+}

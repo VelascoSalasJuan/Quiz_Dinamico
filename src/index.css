@@ -1,0 +1,23 @@
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  color: #000;
+  background: #2C2B27;
+}
+
+button {
+  font: inherit;
+}
+
+h1, h2, p {
+  margin: 0 0 12px;
+}
+
+#root {
+  padding: 16px;
+}

@@ -1,0 +1,265 @@
+.quiz-page {
+  height: 100vh;
+  padding: 0;
+  background: #2C2B27;
+  color: #f3f4f6;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.quiz-header h1 {
+  margin: 0 0 0.35rem;
+}
+
+.quiz-header p {
+  margin: 0.1rem 0;
+  color: #d1d5db;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.header-info {
+  flex: 1;
+}
+
+.surrender-button-header {
+  padding: 0.5rem 1rem;
+  background: #f87171;
+  border: 2px solid #ef4444;
+  border-radius: 0.5rem;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.surrender-button-header:hover:not(:disabled) {
+  background: #ef4444;
+  border-color: #dc2626;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+}
+
+.surrender-button-header:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.test-kill-enemy-btn {
+  padding: 0.25rem 0.5rem;
+  background: #ef4444;
+  border: 1px solid #dc2626;
+  border-radius: 0.25rem;
+  color: #ffffff;
+  font-size: 0.75rem;
+  cursor: pointer;
+  margin-right: 0.5rem;
+}
+
+.test-kill-enemy-btn:hover {
+  background: #dc2626;
+}
+
+.test-kill-enemy-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.category-event {
+  color: #60a5fa;
+  font-weight: 700;
+}
+
+.quiz-layout {
+  flex: 1;
+  margin-top: 0.75rem;
+  display: flex;
+  gap: 0.85rem;
+  min-height: 0;
+}
+
+.left-panel {
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  min-height: 0;
+}
+
+.right-panel {
+  width: 30%;
+  background: #ffffff;
+  border-radius: 0;
+  padding: 0;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* Overlay de resultado del juego que cubre toda la página */
+.game-result-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease-in;
+}
+
+.game-result-overlay.victory {
+  background: rgba(0, 128, 0, 0.8);
+}
+
+.game-result-overlay.defeat {
+  background: rgba(128, 0, 0, 0.8);
+}
+
+.game-result-overlay.draw {
+  background: rgba(128, 128, 128, 0.8);
+}
+
+.game-result-content {
+  text-align: center;
+  color: #ffffff;
+  animation: slideIn 0.5s ease-out;
+}
+
+.game-result-text {
+  font-size: 4rem;
+  font-weight: 800;
+  margin-bottom: 2rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.game-result-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.game-result-btn {
+  padding: 1rem 2rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.game-result-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.game-result-btn.repeat-btn {
+  background: #4CAF50;
+  color: #ffffff;
+}
+
+.game-result-btn.exit-btn {
+  background: #f44336;
+  color: #ffffff;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+
+
+.monster-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.monster-model {
+  font-size: 4rem;
+}
+
+
+.right-panel h2 {
+  margin: 0;
+  text-align: center;
+}
+
+
+.back-link {
+  display: inline-block;
+  margin-top: 0.55rem;
+  text-decoration: none;
+  font-weight: 600;
+  color: #4338ca;
+}
+
+.back-link:hover {
+  text-decoration: underline;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@media (max-width: 900px) {
+  .quiz-layout {
+    flex-direction: column;
+  }
+
+  .left-panel,
+  .right-panel {
+    width: 100%;
+  }
+
+  .right-panel {
+    gap: 0;
+  }
+}
+
+@media (max-width: 640px) {
+  .quiz-page {
+    height: auto;
+    min-height: 100vh;
+    overflow: auto;
+    padding: 0.85rem;
+  }
+
+  }

@@ -1,0 +1,19 @@
+.hero-ability-circle-glow {
+  width: 100%;
+  height: 100%;
+}
+
+.hero-ability-circle-glow.attacking {
+  border-radius: 50%;
+  box-shadow: 0 0 25px #00BFFF, 0 0 50px #00BFFF, 0 0 75px #00BFFF;
+  animation: pulse-circle-glow-hero 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse-circle-glow-hero {
+  0%, 100% {
+    box-shadow: 0 0 25px #00BFFF, 0 0 50px #00BFFF, 0 0 75px #00BFFF;
+  }
+  50% {
+    box-shadow: 0 0 40px #00BFFF, 0 0 80px #00BFFF, 0 0 120px #00BFFF;
+  }
+}

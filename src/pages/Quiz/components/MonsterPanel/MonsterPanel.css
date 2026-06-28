@@ -1,0 +1,616 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@700&display=swap');
+
+.battle-feedback {
+  margin-top: 0.65rem;
+  color: #1f2937;
+  font-weight: 600;
+}
+
+/* Mensaje de victoria/derrota */
+.game-result-message {
+  margin-top: 1rem;
+  padding: 1rem 2rem;
+  font-size: 2rem;
+  font-weight: 800;
+  text-align: center;
+  border-radius: 8px;
+  animation: fadeIn 0.5s ease-in;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.game-result-text {
+  font-size: 2rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.game-result-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.game-result-btn {
+  padding: 0.75rem 2rem;
+  font-size: 1rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+}
+
+.game-result-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.repeat-btn {
+  background: linear-gradient(135deg, #4CAF50 0%, #388E3C 100%);
+  color: white;
+  border: 2px solid #4CAF50;
+}
+
+.exit-btn {
+  background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%);
+  color: white;
+  border: 2px solid #f44336;
+}
+
+.game-result-message.victory {
+  background: linear-gradient(135deg, #ffd700 0%, #ffaa00 100%);
+  color: #1a1a1a;
+  box-shadow: 0 4px 15px rgba(255, 215, 0, 0.5);
+  border: 3px solid #ffd700;
+}
+
+.game-result-message.defeat {
+  background: linear-gradient(135deg, #ff4444 0%, #cc0000 100%);
+  color: #ffffff;
+  box-shadow: 0 4px 15px rgba(255, 0, 0, 0.5);
+  border: 3px solid #ff4444;
+}
+
+.game-result-message.draw {
+  background: linear-gradient(135deg, #888888 0%, #555555 100%);
+  color: #ffffff;
+  box-shadow: 0 4px 15px rgba(128, 128, 128, 0.5);
+  border: 3px solid #888888;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.monster-png {
+  width: 200px;
+  height: 200px;
+  object-fit: contain;
+  position: relative;
+  z-index: 10;
+}
+
+.health-bar-section {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin-bottom: 0;
+  padding: 0;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.hero-side {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+  background: linear-gradient(90deg, #1866CD 0%, #134588 100%);
+  border-radius: 0;
+}
+
+.monster-side {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+  background: linear-gradient(90deg, #841920 0%, #5E262C 100%);
+  border-radius: 0;
+  justify-content: flex-end;
+}
+
+.center-divider {
+  width: 2px;
+  height: 100%;
+  background: #9ca3af;
+  border-radius: 1px;
+}
+
+.profile-box {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: 4px solid #4338ca;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+  box-shadow: 0 4px 12px rgba(67, 56, 202, 0.2);
+  flex-shrink: 0;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+}
+
+.profile-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profile-placeholder {
+  font-size: 1.5rem;
+  color: #6366f1;
+}
+
+/* ── CONTENEDOR PRINCIPAL ── */
+.hp-bar-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  filter: drop-shadow(4px 4px 0px rgba(0,0,0,0.7));
+}
+
+/* ── MEDALLA / ICONO ── */
+.hp-icon {
+  width: 56px;
+  height: 56px;
+  position: relative;
+  flex-shrink: 0;
+  z-index: 2;
+  image-rendering: pixelated;
+  border-radius: 50%;
+  background: #c8860a;
+  box-shadow: 4px 4px 0px rgba(0,0,0,0.7);
+  overflow: hidden;
+}
+
+/* Círculo dorado exterior */
+.hp-icon::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #f0d060 0%, #c8860a 50%, #a06010 100%);
+  z-index: 1;
+}
+
+/* Círculo marrón interior */
+.hp-icon::after {
+  content: '';
+  position: absolute;
+  inset: 6px;
+  border-radius: 50%;
+  background: #7a5030;
+  z-index: 2;
+}
+
+/* Overlay para foto de perfil */
+.hp-icon-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3;
+}
+
+.hp-icon-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+/* ── BARRA EXTERIOR (marco dorado) ── */
+.hp-bar-outer {
+  position: relative;
+  height: 28px;
+  width: 220px;
+  margin-left: -6px;
+  background: #c8860a;
+  clip-path: polygon(0 4px, 4px 0, calc(100% - 10px) 0, 100% 50%, calc(100% - 10px) 100%, 4px 100%, 0 calc(100% - 4px));
+  z-index: 2;
+}
+
+/* Barra del monstruo apuntando a la izquierda */
+.monster-side .hp-bar-outer {
+  margin-left: 0;
+  margin-right: 0;
+  clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 4px), calc(100% - 4px) 100%, 10px 100%, 4px 50%);
+}
+
+/* Borde interno oscuro */
+.hp-bar-inner-frame {
+  position: absolute;
+  inset: 3px 3px 3px 3px;
+  background: #2a1a3a;
+  clip-path: polygon(0 2px, 2px 0, calc(100% - 7px) 0, 100% 50%, calc(100% - 7px) 100%, 2px 100%, 0 calc(100% - 2px));
+}
+
+/* Borde interno oscuro del monstruo */
+.monster-side .hp-bar-inner-frame {
+  clip-path: polygon(7px 0, 100% 0, 100% calc(100% - 2px), calc(100% - 2px) 100%, 7px 100%, 2px 50%);
+}
+
+/* Fondo vacío (gris azulado) */
+.hp-bar-bg {
+  position: absolute;
+  inset: 5px 5px 5px 5px;
+  background: #4a4060;
+  clip-path: polygon(0 2px, 2px 0, calc(100% - 6px) 0, 100% 50%, calc(100% - 6px) 100%, 2px 100%, 0 calc(100% - 2px));
+}
+
+/* Fondo vacío del monstruo */
+.monster-side .hp-bar-bg {
+  clip-path: polygon(6px 0, 100% 0, 100% calc(100% - 2px), calc(100% - 2px) 100%, 6px 100%, 2px 50%);
+}
+
+/* Relleno HP (rojo) */
+.hp-bar-fill {
+  position: absolute;
+  inset: 5px auto 5px 5px;
+  width: calc(var(--hp, 1) * (210px - 16px));
+  background: linear-gradient(to bottom,
+    #e05878 0%,
+    #c03050 40%,
+    #a02040 60%,
+    #c03050 100%
+  );
+  clip-path: polygon(0 2px, 2px 0, calc(100% - 10px) 0, 100% 50%, calc(100% - 10px) 100%, 2px 100%, 0 calc(100% - 2px));
+  transition: width 0.4s steps(20, end);
+  min-width: 6px;
+  z-index: 1;
+}
+
+/* Relleno HP del monstruo */
+.monster-side .hp-bar-fill {
+  clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 2px), calc(100% - 2px) 100%, 10px 100%, 0 50%);
+  right: 5px;
+  left: auto;
+}
+
+/* Línea de brillo superior */
+.hp-bar-fill::before {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 4px;
+  right: 4px;
+  height: 3px;
+  background: rgba(255,180,180,0.5);
+}
+
+/* Sombra inferior */
+.hp-bar-fill::after {
+  content: '';
+  position: absolute;
+  bottom: 2px;
+  left: 4px;
+  right: 4px;
+  height: 2px;
+  background: rgba(0,0,0,0.3);
+}
+
+/* Detalles dorados del marco */
+.hp-bar-outer::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  clip-path: polygon(0 4px, 4px 0, calc(100% - 10px) 0, 100% 50%, calc(100% - 10px) 100%, 4px 100%, 0 calc(100% - 4px));
+  background: linear-gradient(to bottom, #f0d060, #c8860a 50%, #a06010);
+}
+
+/* Detalles dorados del marco del monstruo */
+.monster-side .hp-bar-outer::before {
+  clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 4px), calc(100% - 4px) 100%, 10px 100%, 4px 50%);
+}
+
+
+.player-hp {
+  background: #000000;
+}
+
+.enemy-hp {
+  background: #000000;
+}
+
+.scenario-section {
+  flex: 1;
+  min-height: 300px;
+  margin-bottom: 0;
+  border-radius: 0;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.scenario-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem;
+}
+
+.scenario-placeholder {
+  font-size: 4rem;
+  color: #9ca3af;
+  opacity: 0.5;
+}
+
+.selected-abilities-section {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  padding: 0;
+  z-index: 10;
+  height: 50px;
+}
+
+.hero-ability-container {
+  margin-left: 0;
+  margin-right: auto;
+}
+
+.monster-ability-container {
+  margin-right: 0;
+  margin-left: auto;
+}
+
+.ability-container {
+  width: 270px;
+  height: 50px;
+  background: rgba(255, 255, 255, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 0.1rem 0;
+}
+
+.monster-ability-container {
+  justify-content: flex-end;
+}
+
+.hero-ability-container {
+  border-radius: 0 3rem 3rem 0;
+  background: #0E2A53;
+}
+
+.monster-ability-container {
+  border-radius: 3rem 0 0 3rem;
+  background: #480E0D;
+}
+
+.ability-content {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.hero-ability-content {
+  gap: 1rem;
+}
+
+.hero-ability-container .ability-text {
+  position: absolute;
+  top: 50%;
+  left: 70px;
+  transform: translateY(-50%);
+}
+
+.monster-ability-container .ability-text {
+  position: absolute;
+  top: 50%;
+  right: 100px;
+  transform: translateY(-50%);
+}
+
+.monster-ability-content {
+  gap: 0;
+  justify-content: flex-end;
+}
+
+.ability-circle {
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  border: 3px solid #4338ca;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(67, 56, 202, 0.2);
+  flex-shrink: 0;
+  padding: 0.1rem 0;
+  position: relative;
+  top: 0;
+}
+
+.hero-ability {
+  border-color: #001636;
+  background: #001636;
+}
+
+.monster-ability {
+  border-color: #1F0201;
+  background: #1F0201;
+}
+
+.ability-circle-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+.ability-inner-circle {
+  width: 85%;
+  height: 85%;
+  border-radius: 50%;
+  border: 3px dashed rgba(255, 255, 255, 0.6);
+  border-dasharray: 25 12;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.hero-inner-circle {
+  border-color: #6992B0;
+}
+
+.monster-inner-circle {
+  border-color: #A3564F;
+}
+
+/* Animación de carga giratoria */
+.loading-spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    transparent 180deg,
+    #A3564F 180deg,
+    rgba(163, 86, 79, 0.3) 270deg,
+    transparent 270deg
+  );
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+/* Signo de interrogación */
+.question-mark {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 2rem;
+  font-weight: bold;
+  color: #A3564F;
+  font-family: 'Oswald', sans-serif;
+}
+
+.ability-circle-placeholder img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10;
+}
+
+/* Imagen del héroe superpuesta al fondo - parte inferior izquierda */
+.hero-overlay-image {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 50%;
+  height: auto;
+  max-height: 65%;
+  object-fit: cover;
+  object-position: top center;
+  z-index: 10;
+  pointer-events: none;
+}
+
+/* Imagen del dragón superpuesta al fondo - parte superior derecha */
+.monster-overlay-image {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 50%;
+  height: auto;
+  max-height: 65%;
+  object-fit: cover;
+  object-position: top right;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.ability-icon-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 50%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 15;
+}
+
+.ability-text {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: 0.5px;
+  font-family: 'Oswald', sans-serif;
+}
+
+.hero-ability-text {
+  color: #6992B0;
+}
+
+.monster-ability-text {
+  color: #A3564F;
+}

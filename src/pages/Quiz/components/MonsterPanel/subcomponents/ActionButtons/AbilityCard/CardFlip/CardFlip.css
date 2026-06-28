@@ -1,0 +1,14 @@
+.card-flip-wrapper {
+  perspective: 1000px;
+  width: 100%;
+  height: 100%;
+}
+
+.card-flip-wrapper.flipped .card-inner {
+  transform: rotateY(180deg);
+}
+
+.card-no-flip {
+  width: 100%;
+  height: 100%;
+}

@@ -1,0 +1,64 @@
+/* Animación de brillo al recibir daño */
+@keyframes damage-flash {
+  0%   {
+    filter: grayscale(100%);
+  }
+  50%  {
+    filter: grayscale(50%);
+  }
+  100% {
+    filter: grayscale(0%);
+  }
+}
+
+.damage-flash .hp-bar-outer {
+  animation: border-flash 1s ease-in-out;
+}
+
+.damage-flash .hp-bar-outer::before {
+  animation: border-before-flash 1s ease-in-out;
+}
+
+.damage-flash .hp-icon::before {
+  animation: icon-border-flash 1s ease-in-out;
+}
+
+.damage-flash .hp-bar-fill {
+  animation: bar-flash 1s ease-in-out;
+}
+
+@keyframes border-flash {
+  0%   {
+    background: #ffffff;
+  }
+  100% {
+    background: #c8860a;
+  }
+}
+
+@keyframes border-before-flash {
+  0%   {
+    background: linear-gradient(to bottom, #ffffff, #e0e0e0 50%, #c0c0c0);
+  }
+  100% {
+    background: linear-gradient(to bottom, #f0d060, #c8860a 50%, #a06010);
+  }
+}
+
+@keyframes icon-border-flash {
+  0%   {
+    background: linear-gradient(135deg, #ffffff 0%, #e0e0e0 50%, #c0c0c0 100%);
+  }
+  100% {
+    background: linear-gradient(135deg, #f0d060 0%, #c8860a 50%, #a06010 100%);
+  }
+}
+
+@keyframes bar-flash {
+  0%   {
+    background: #808080;
+  }
+  100% {
+    background: linear-gradient(to bottom, #e05878 0%, #c03050 40%, #a02040 60%, #c03050 100%);
+  }
+}

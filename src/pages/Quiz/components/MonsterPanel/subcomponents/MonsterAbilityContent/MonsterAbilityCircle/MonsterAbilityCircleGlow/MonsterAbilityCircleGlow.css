@@ -1,0 +1,19 @@
+.monster-ability-circle-glow {
+  width: 100%;
+  height: 100%;
+}
+
+.monster-ability-circle-glow.attacking {
+  border-radius: 50%;
+  box-shadow: 0 0 15px #FF4500, 0 0 30px #FF4500, 0 0 45px #FF4500;
+  animation: pulse-circle-glow-monster 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse-circle-glow-monster {
+  0%, 100% {
+    box-shadow: 0 0 15px #FF4500, 0 0 30px #FF4500, 0 0 45px #FF4500;
+  }
+  50% {
+    box-shadow: 0 0 25px #FF4500, 0 0 50px #FF4500, 0 0 75px #FF4500;
+  }
+}

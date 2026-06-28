@@ -1,0 +1,21 @@
+.simple-button {
+  padding: 0;
+  background: #ffffff;
+  border: 2px solid #3b82f6;
+  border-radius: 0.5rem;
+  color: #1e3a8a;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.simple-button:hover:not(:disabled) {
+  background: #3b82f6;
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+.simple-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
